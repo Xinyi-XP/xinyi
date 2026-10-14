@@ -3,11 +3,536 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="My personal portfolio website">
+  <title>My Portfolio | Xinyi</title>
+
+  <style>
+    :root {
+      --bg: #faf9ff;
+      --surface: #ffffff;
+      --primary: #8274d9;
+      --primary-light: #eeeaff;
+      --text: #292640;
+      --muted: #77748b;
+      --border: #e9e6f3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Navigation bar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* General layout */
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 80px 24px;
+      scroll-margin-top: 75px;
+    }
+
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 90px;
+      padding-bottom: 90px;
+      background:
+        radial-gradient(
+          ellipse at 50% 35%,
+          #eeeaff 0%,
+          #faf9ff 65%
+        );
+    }
+
+    .hero-content {
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 7vw, 66px);
+      line-height: 1.15;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 38px);
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      color: var(--primary);
+    }
+
+    .intro {
+      max-width: 590px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 12px 23px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 5px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .button-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .section-label {
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      max-width: 650px;
+      margin-bottom: 30px;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .center .section-description {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Cards and grids */
+    .grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+
+    .card {
+      padding: 25px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(70, 55, 130, 0.08);
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .card-link {
+      display: inline-block;
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .icon {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--primary-light);
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    /* About */
+    .about-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+    }
+
+    /* Skills */
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .skill {
+      background: var(--primary-light);
+      color: #6255ad;
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    /* Resume and contact */
+    .resume-box, .contact-box {
+      text-align: center;
+      padding: 40px 24px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 22px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      background: white;
+    }
+
+    @media (max-width: 760px) {
+      nav {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px 12px;
+      }
+
+      .nav-links {
+        justify-content: center;
+        gap: 12px 16px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+
+      .container {
+        padding: 60px 20px;
+      }
+
+      .hero {
+        min-height: 75vh;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Welcome to my portfolio!</h1>
-  <p>Hello, I'm Xinyi.</p>
-  <p>My website is working!</p>
+
+  <!-- TOP NAVIGATION -->
+  <header>
+    <nav>
+      <a class="logo" href="#home">Xinyi.</a>
+
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About Me</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills &amp; Tools</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+    <section class="container hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow">Welcome to my portfolio</p>
+
+        <h1>
+          Hi, I'm <span class="highlight">Xinyi</span>!
+          <br>
+          Welcome to my little corner of the internet.
+        </h1>
+
+        <p class="intro">
+          I'm a curious learner who enjoys exploring new ideas,
+          developing my skills, and creating meaningful projects.
+          Take a look around to learn more about me and my work.
+        </p>
+
+        <a class="button" href="#projects">Explore My Projects ↗</a>
+        <a class="button button-outline" href="#about">Get to Know Me</a>
+      </div>
+    </section>
+
+    <!-- ABOUT ME -->
+    <section class="container" id="about">
+      <p class="section-label">A little introduction</p>
+      <h2>About Me</h2>
+
+      <div class="about-box">
+        <p>
+          Hello! I'm Xinyi. I'm passionate about learning,
+          exploring technology, and discovering new ways to
+          express my creativity.
+        </p>
+        <br>
+        <p>
+          This website is a space where I share my journey,
+          showcase projects I've worked on, and document the
+          skills I'm developing along the way.
+        </p>
+        <br>
+        <p>
+          Outside of my work, I enjoy discovering new interests,
+          learning new things, and challenging myself to grow.
+        </p>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="container" id="projects">
+      <p class="section-label">Things I've created</p>
+      <h2>My Projects</h2>
+      <p class="section-description">
+        Here are some projects I've worked on. I'll keep adding
+        more as I learn and build new things.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <div class="icon">🌷</div>
+          <h3>Personal Portfolio</h3>
+          <p>
+            A personal website built to introduce myself and
+            showcase my skills, interests, and projects.
+          </p>
+          <p><strong>Tools:</strong> HTML, CSS, GitHub Pages</p>
+          <a class="card-link"
+             href="https://github.com/xinyi-xp/xinyi-xp.github.io">
+            View Repository ↗
+          </a>
+        </article>
+
+        <article class="card">
+          <div class="icon">💡</div>
+          <h3>Project Two</h3>
+          <p>
+            Add a short description of another project here.
+            Explain what it does and the problem it solves.
+          </p>
+          <p><strong>Tools:</strong> Add your tools here</p>
+          <a class="card-link" href="#contact">
+            Project Link Coming Soon
+          </a>
+        </article>
+
+        <article class="card">
+          <div class="icon">🎨</div>
+          <h3>Project Three</h3>
+          <p>
+            Showcase a school assignment, personal experiment,
+            design, or another project you're proud of.
+          </p>
+          <p><strong>Tools:</strong> Add your tools here</p>
+          <a class="card-link" href="#contact">
+            Project Link Coming Soon
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS AND TOOLS -->
+    <section class="container" id="skills">
+      <p class="section-label">What I work with</p>
+      <h2>Skills &amp; Tools</h2>
+      <p class="section-description">
+        The technologies and tools I use or am currently
+        learning. I'll update this section as I grow.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="icon">💻</div>
+          <h3>Web Development</h3>
+          <div class="skill-list">
+            <span class="skill">HTML</span>
+            <span class="skill">CSS</span>
+            <span class="skill">JavaScript (Learning)</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="icon">🛠️</div>
+          <h3>Tools</h3>
+          <div class="skill-list">
+            <span class="skill">GitHub</span>
+            <span class="skill">VS Code (Learning)</span>
+            <span class="skill">Git (Learning)</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="icon">✨</div>
+          <h3>Other Skills</h3>
+          <div class="skill-list">
+            <span class="skill">Problem Solving</span>
+            <span class="skill">Creativity</span>
+            <span class="skill">Teamwork</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME -->
+    <section class="container" id="resume">
+      <p class="section-label">My background</p>
+      <h2>Resume</h2>
+
+      <div class="resume-box">
+        <div class="icon" style="margin: 0 auto 18px;">📄</div>
+        <h3>Want to know more about my experience?</h3>
+        <p class="section-description" style="margin: 12px auto;">
+          My resume includes my education, experience, skills,
+          and other relevant achievements.
+        </p>
+
+        <!-- Upload your resume PDF to your repository,
+             then replace resume.pdf with its filename. -->
+        <a class="button" href="resume.pdf" target="_blank"
+           rel="noopener noreferrer">
+          View My Resume ↗
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="container" id="contact">
+      <p class="section-label">Let's connect</p>
+      <h2>Contact Me</h2>
+
+      <div class="contact-box">
+        <h3>I'd love to hear from you!</h3>
+        <p class="section-description" style="margin: 12px auto;">
+          Have a question, an opportunity, or just want to say
+          hello? Feel free to reach out.
+        </p>
+
+        <!-- Replace these example links with your own. -->
+        <div class="contact-links">
+          <a href="mailto:your-email@example.com">✉ Email</a>
+          <a href="https://github.com/xinyi-xp"
+             target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+          <a href="https://www.linkedin.com/"
+             target="_blank" rel="noopener noreferrer">
+            LinkedIn ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Xinyi · Made with care ♡</p>
+  </footer>
+
 </body>
 </html>

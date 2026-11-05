@@ -239,7 +239,7 @@ h3 {
 
 /* Project Images */
 .project-image {
-  width: 75%;
+  width: 100%;
   max-height: 200px;
   object-fit: contain;
   border-radius: 12px;
